@@ -1,39 +1,43 @@
-import { useEffect, useState } from "react";
-import { supabase } from "./lib/supabase";
+import { Navigate, Route, Routes } from "react-router-dom";
 
-function App() {
-  const [connected, setConnected] = useState(false);
+import Landing from "./pages/Landing";
+import Login from "./pages/auth/Login";
+import Register from "./pages/auth/Register";
+import ProtectedRoute from "./components/common/ProtectedRoute";
+import AuthenticatedHeader from "./components/common/AuthenticatedHeader";
 
-  useEffect(() => {
-    async function testSupabase() {
-      const { error } = await supabase.from("profiles").select("id").limit(1);
-
-      if (error) {
-        console.error("Supabase connection test:", error);
-        return;
-      }
-
-      setConnected(true);
-    }
-
-    testSupabase();
-  }, []);
-
+function MarketplacePlaceholder() {
   return (
-    <main className="flex min-h-screen items-center justify-center px-4">
-      <div className="text-center">
-        <h1 className="text-3xl font-bold text-slate-900">
-          Campus Marketplace
-        </h1>
+    <div className="min-h-screen bg-slate-50">
+      <AuthenticatedHeader />
 
-        <p className="mt-3 text-slate-600">
-          {connected
-            ? "Supabase connected successfully ✅"
-            : "Connecting to Supabase..."}
-        </p>
-      </div>
-    </main>
+      <main className="flex min-h-[calc(100vh-73px)] items-center justify-center px-5">
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-slate-900">Marketplace</h1>
+
+          <p className="mt-2 text-slate-600">
+            Marketplace features are coming in Batch 3.
+          </p>
+        </div>
+      </main>
+    </div>
   );
 }
 
-export default App;
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Landing />} />
+
+      <Route path="/login" element={<Login />} />
+
+      <Route path="/register" element={<Register />} />
+
+      <Route element={<ProtectedRoute />}>
+        <Route path="/marketplace" element={<MarketplacePlaceholder />} />
+      </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
+    </Routes>
+  );
+}
