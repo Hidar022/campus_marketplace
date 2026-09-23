@@ -63,7 +63,8 @@ const navigation = [
     description: "Manage categories",
     type: "categories",
     to: "/admin/categories",
-    available: false,
+    available: true,
+    end: true,
   },
   {
     label: "Profile",

@@ -21,6 +21,7 @@ import AdminUsers from "./pages/admin/AdminUsers";
 import AdminProducts from "./pages/admin/AdminProducts";
 import AdminUserDetails from "./pages/admin/AdminUserDetails";
 import AdminProductDetails from "./pages/admin/AdminProductDetails";
+import AdminCategories from "./pages/admin/AdminCategories";
 
 export default function App() {
   return (
@@ -60,6 +61,7 @@ export default function App() {
           <Route path="/admin/users/:id" element={<AdminUserDetails />} />
           <Route path="/admin/products/:id" element={<AdminProductDetails />} />
           <Route path="/admin/products" element={<AdminProducts />} />
+          <Route path="/admin/categories" element={<AdminCategories />} />
         </Route>
       </Route>
 
