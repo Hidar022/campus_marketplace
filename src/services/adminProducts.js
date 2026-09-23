@@ -24,6 +24,9 @@ const adminProductSelect = `
   )
 `;
 
+/**
+ * Get all products for the admin products page.
+ */
 export async function getAdminProducts() {
   const { data, error } = await supabase
     .from("products")
@@ -37,6 +40,49 @@ export async function getAdminProducts() {
   return data ?? [];
 }
 
+/**
+ * Get the most recently listed products.
+ *
+ * Used by the admin dashboard.
+ */
+export async function getRecentAdminProducts(limit = 5) {
+  const { data, error } = await supabase
+    .from("products")
+    .select(
+      `
+      id,
+      name,
+      price,
+      status,
+      created_at,
+      categories (
+        id,
+        name
+      ),
+      profiles!products_seller_id_fkey (
+        id,
+        full_name
+      )
+    `,
+    )
+    .order("created_at", { ascending: false })
+    .limit(limit);
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
+
+/**
+ * Update a product status from the admin panel.
+ *
+ * Supported statuses:
+ * active
+ * sold
+ * removed
+ */
 export async function updateAdminProductStatus({ productId, status }) {
   const { data, error } = await supabase
     .from("products")
@@ -55,6 +101,9 @@ export async function updateAdminProductStatus({ productId, status }) {
   return data;
 }
 
+/**
+ * Get one product for the admin product details page.
+ */
 export async function getAdminProductById(productId) {
   const { data, error } = await supabase
     .from("products")

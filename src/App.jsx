@@ -22,6 +22,7 @@ import AdminProducts from "./pages/admin/AdminProducts";
 import AdminUserDetails from "./pages/admin/AdminUserDetails";
 import AdminProductDetails from "./pages/admin/AdminProductDetails";
 import AdminCategories from "./pages/admin/AdminCategories";
+import AdminProfile from "./pages/admin/AdminProfile";
 
 export default function App() {
   return (
@@ -62,6 +63,7 @@ export default function App() {
           <Route path="/admin/products/:id" element={<AdminProductDetails />} />
           <Route path="/admin/products" element={<AdminProducts />} />
           <Route path="/admin/categories" element={<AdminCategories />} />
+          <Route path="/admin/profile" element={<AdminProfile />} />
         </Route>
       </Route>
 

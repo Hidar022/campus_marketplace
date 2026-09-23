@@ -71,7 +71,7 @@ const navigation = [
     description: "Admin account",
     type: "profile",
     to: "/admin/profile",
-    available: false,
+    available: true,
   },
 ];
 
