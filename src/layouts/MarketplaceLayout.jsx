@@ -73,9 +73,9 @@ const navigation = [
     label: "Profile",
     description: "Account settings",
     type: "profile",
-    to: "#",
-    available: false,
-    end: false,
+    to: "/marketplace/profile",
+    available: true,
+    end: true,
   },
 ];
 
