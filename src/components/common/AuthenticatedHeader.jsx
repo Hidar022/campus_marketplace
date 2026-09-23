@@ -10,11 +10,13 @@ export default function AuthenticatedHeader() {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const displayName =
-    user?.user_metadata?.full_name || user?.email?.split("@")[0] || "Campus user";
+    user?.user_metadata?.full_name ||
+    user?.email?.split("@")[0] ||
+    "Campus user";
 
   const navItems = [
     { label: "Marketplace", to: "/marketplace", available: true },
-    { label: "My Products", to: "#", available: false },
+    { label: "My Products", to: "/marketplace/my-products", available: true },
     { label: "Profile", to: "#", available: false },
   ];
 
@@ -31,11 +33,21 @@ export default function AuthenticatedHeader() {
     <header className="sticky top-0 z-20 border-b border-slate-200/90 bg-white/90 shadow-[0_1px_12px_rgba(15,23,42,0.04)] backdrop-blur">
       <div className="mx-auto max-w-[1500px] px-5 sm:px-6 lg:px-8">
         <div className="flex min-h-[68px] items-center justify-between gap-4">
-          <Link to="/marketplace" className="flex shrink-0 items-center gap-3" onClick={() => setMenuOpen(false)}>
-            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-700 text-lg font-black text-white shadow-sm shadow-emerald-900/15">C</span>
+          <Link
+            to="/marketplace"
+            className="flex shrink-0 items-center gap-3"
+            onClick={() => setMenuOpen(false)}
+          >
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-emerald-700 text-lg font-black text-white shadow-sm shadow-emerald-900/15">
+              C
+            </span>
             <span>
-              <span className="block text-base font-black tracking-tight text-slate-950 sm:text-lg">Campus Marketplace</span>
-              <span className="block text-[11px] font-medium tracking-wide text-slate-500">YOUR CAMPUS COMMUNITY</span>
+              <span className="block text-base font-black tracking-tight text-slate-950 sm:text-lg">
+                Campus Marketplace
+              </span>
+              <span className="block text-[11px] font-medium tracking-wide text-slate-500">
+                YOUR CAMPUS COMMUNITY
+              </span>
             </span>
           </Link>
 
@@ -44,8 +56,12 @@ export default function AuthenticatedHeader() {
               {displayName.charAt(0).toUpperCase()}
             </div>
             <div className="hidden text-right lg:block">
-              <p className="max-w-40 truncate text-sm font-bold text-slate-800">{displayName}</p>
-              <p className="max-w-48 truncate text-xs text-slate-500">{user?.email}</p>
+              <p className="max-w-40 truncate text-sm font-bold text-slate-800">
+                {displayName}
+              </p>
+              <p className="max-w-48 truncate text-xs text-slate-500">
+                {user?.email}
+              </p>
             </div>
             <button
               type="button"
@@ -68,8 +84,14 @@ export default function AuthenticatedHeader() {
         </div>
 
         {menuOpen && (
-          <div id="mobile-marketplace-menu" className="border-t border-slate-100 py-3 md:hidden">
-            <nav className="grid gap-1" aria-label="Mobile marketplace navigation">
+          <div
+            id="mobile-marketplace-menu"
+            className="border-t border-slate-100 py-3 md:hidden"
+          >
+            <nav
+              className="grid gap-1"
+              aria-label="Mobile marketplace navigation"
+            >
               {navItems.map((item) =>
                 item.available ? (
                   <NavLink
@@ -78,22 +100,30 @@ export default function AuthenticatedHeader() {
                     onClick={() => setMenuOpen(false)}
                     className={({ isActive }) =>
                       `rounded-lg px-3 py-3 text-sm font-semibold ${
-                        isActive ? "bg-emerald-50 text-emerald-700" : "text-slate-600"
+                        isActive
+                          ? "bg-emerald-50 text-emerald-700"
+                          : "text-slate-600"
                       }`
                     }
                   >
                     {item.label}
                   </NavLink>
                 ) : (
-                  <span key={item.label} className="rounded-lg px-3 py-3 text-sm font-semibold text-slate-400">
-                    {item.label} <span className="font-normal">(coming soon)</span>
+                  <span
+                    key={item.label}
+                    className="rounded-lg px-3 py-3 text-sm font-semibold text-slate-400"
+                  >
+                    {item.label}{" "}
+                    <span className="font-normal">(coming soon)</span>
                   </span>
                 ),
               )}
             </nav>
             <div className="mt-2 flex items-center justify-between border-t border-slate-100 px-3 pt-3">
               <div className="min-w-0">
-                <p className="truncate text-sm font-semibold text-slate-800">{displayName}</p>
+                <p className="truncate text-sm font-semibold text-slate-800">
+                  {displayName}
+                </p>
                 <p className="truncate text-xs text-slate-500">{user?.email}</p>
               </div>
               <button

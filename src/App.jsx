@@ -5,6 +5,8 @@ import Login from "./pages/auth/Login";
 import Register from "./pages/auth/Register";
 import Marketplace from "./pages/marketplace/Marketplace";
 import ProductDetails from "./pages/marketplace/ProductDetails";
+import EditProduct from "./pages/user/EditProduct";
+import MyProducts from "./pages/user/MyProducts";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 
 export default function App() {
@@ -19,6 +21,11 @@ export default function App() {
       <Route element={<ProtectedRoute />}>
         <Route path="/marketplace" element={<Marketplace />} />
         <Route path="/marketplace/products/:id" element={<ProductDetails />} />
+        <Route path="/marketplace/my-products" element={<MyProducts />} />
+        <Route
+          path="/marketplace/my-products/:id/edit"
+          element={<EditProduct />}
+        />
       </Route>
 
       <Route path="*" element={<Navigate to="/" replace />} />

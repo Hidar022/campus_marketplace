@@ -104,3 +104,133 @@ export async function getProductById(productId) {
 
   return data;
 }
+
+const managedProductSelect = `
+  id,
+  seller_id,
+  category_id,
+  name,
+  description,
+  price,
+  condition,
+  image_url,
+  status,
+  created_at,
+  updated_at,
+  categories (
+    id,
+    name
+  )
+`;
+
+export async function createProduct({
+  sellerId,
+  categoryId,
+  name,
+  description,
+  price,
+  condition,
+  imageUrl,
+}) {
+  const { data, error } = await supabase
+    .from("products")
+    .insert({
+      seller_id: sellerId,
+      category_id: categoryId,
+      name,
+      description,
+      price,
+      condition,
+      image_url: imageUrl || null,
+      status: "active",
+    })
+    .select(managedProductSelect)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function getMyProducts(sellerId) {
+  const { data, error } = await supabase
+    .from("products")
+    .select(managedProductSelect)
+    .eq("seller_id", sellerId)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    throw error;
+  }
+
+  return data ?? [];
+}
+
+export async function getMyProductById(productId, sellerId) {
+  const { data, error } = await supabase
+    .from("products")
+    .select(managedProductSelect)
+    .eq("id", productId)
+    .eq("seller_id", sellerId)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function updateProduct({
+  productId,
+  sellerId,
+  categoryId,
+  name,
+  description,
+  price,
+  condition,
+  imageUrl,
+}) {
+  const { data, error } = await supabase
+    .from("products")
+    .update({
+      category_id: categoryId,
+      name,
+      description,
+      price,
+      condition,
+      image_url: imageUrl || null,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", productId)
+    .eq("seller_id", sellerId)
+    .select(managedProductSelect)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function updateProductStatus({ productId, sellerId, status }) {
+  const { data, error } = await supabase
+    .from("products")
+    .update({
+      status,
+      updated_at: new Date().toISOString(),
+    })
+    .eq("id", productId)
+    .eq("seller_id", sellerId)
+    .select(managedProductSelect)
+    .maybeSingle();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
