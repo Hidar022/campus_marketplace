@@ -24,3 +24,29 @@ export async function getAdminUsers() {
 
   return data ?? [];
 }
+
+export async function getAdminUserById(userId) {
+  const { data, error } = await supabase
+    .from("profiles")
+    .select(
+      `
+      id,
+      full_name,
+      email,
+      phone,
+      department,
+      student_id,
+      role,
+      avatar_url,
+      created_at
+    `,
+    )
+    .eq("id", userId)
+    .single();
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}

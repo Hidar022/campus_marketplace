@@ -55,7 +55,8 @@ const navigation = [
     description: "Manage listings",
     type: "products",
     to: "/admin/products",
-    available: false,
+    available: true,
+    end: true,
   },
   {
     label: "Categories",

@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import { getAdminUsers } from "../../services/admin";
 
@@ -44,6 +45,7 @@ function formatDate(date) {
 }
 
 export default function AdminUsers() {
+  const navigate = useNavigate();
   const [users, setUsers] = useState([]);
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
@@ -264,7 +266,8 @@ export default function AdminUsers() {
                   {filteredUsers.map((user) => (
                     <tr
                       key={user.id}
-                      className="border-b border-slate-100 last:border-b-0 hover:bg-slate-50/60"
+                      onClick={() => navigate(`/admin/users/${user.id}`)}
+                      className="cursor-pointer border-b border-slate-100 last:border-b-0 hover:bg-slate-50/60"
                     >
                       <td className="px-5 py-4">
                         <div className="flex items-center gap-3">
@@ -318,7 +321,11 @@ export default function AdminUsers() {
           {!loading && !error && filteredUsers.length > 0 && (
             <div className="divide-y divide-slate-100 md:hidden">
               {filteredUsers.map((user) => (
-                <div key={user.id} className="p-4">
+                <div
+                  key={user.id}
+                  onClick={() => navigate(`/admin/users/${user.id}`)}
+                  className="cursor-pointer p-4 transition hover:bg-slate-50"
+                >
                   <div className="flex items-start gap-3">
                     <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-emerald-100 text-xs font-black text-emerald-800">
                       {getInitials(user.full_name, user.email)}
