@@ -14,6 +14,10 @@ import Profile from "./pages/user/Profile";
 import ProtectedRoute from "./components/common/ProtectedRoute";
 import MarketplaceLayout from "./layouts/MarketplaceLayout";
 
+import AdminRoute from "./components/common/AdminRoute";
+import AdminLayout from "./layouts/AdminLayout";
+import AdminDashboard from "./pages/admin/AdminDashboard";
+
 export default function App() {
   return (
     <Routes>
@@ -43,6 +47,12 @@ export default function App() {
             </MarketplaceLayout>
           }
         />
+      </Route>
+
+      <Route element={<AdminRoute />}>
+        <Route element={<AdminLayout />}>
+          <Route path="/admin" element={<AdminDashboard />} />
+        </Route>
       </Route>
 
       {/* Unknown routes */}

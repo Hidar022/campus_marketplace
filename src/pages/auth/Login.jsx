@@ -3,6 +3,7 @@ import { useState } from "react";
 
 import AuthLayout from "../../layouts/AuthLayout";
 import { loginUser } from "../../services/auth";
+import { getMyProfile } from "../../services/profile";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -32,12 +33,18 @@ export default function Login() {
     try {
       setLoading(true);
 
-      await loginUser({
+      const data = await loginUser({
         email: form.email,
         password: form.password,
       });
 
-      navigate("/marketplace");
+      const profile = await getMyProfile(data.user.id);
+
+      if (profile?.role === "admin") {
+        navigate("/admin", { replace: true });
+      } else {
+        navigate("/marketplace", { replace: true });
+      }
     } catch (err) {
       setError(err.message || "Invalid email or password.");
     } finally {
