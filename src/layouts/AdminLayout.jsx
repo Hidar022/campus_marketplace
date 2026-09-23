@@ -47,7 +47,8 @@ const navigation = [
     description: "Manage members",
     type: "users",
     to: "/admin/users",
-    available: false,
+    available: true,
+    end: true,
   },
   {
     label: "Products",
